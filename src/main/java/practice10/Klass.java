@@ -54,7 +54,8 @@ public class Klass {
 
     public void appendMember(Student student) {
         if (!studentList.contains(student)) {
-            System.out.print("I am " + classTeacher.getName() + ". I know " + student.getName() + " has joined Class 2.\n");
+            if (classTeacher != null)
+                System.out.print("I am " + classTeacher.getName() + ". I know " + student.getName() + " has joined Class " + this.number + ".\n");
             this.studentList.add(student);
         }
 
