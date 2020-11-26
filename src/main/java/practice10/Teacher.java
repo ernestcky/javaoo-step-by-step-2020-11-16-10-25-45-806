@@ -55,18 +55,20 @@ public class Teacher extends Person {
 
         if (isInClass)
             return super.introduce() + " I am a Teacher. I teach " + student.getName() + ".";
-        else
-            return super.introduce() + " I am a Teacher. I don't teach " + student.getName() + ".";
+        return super.introduce() + " I am a Teacher. I don't teach " + student.getName() + ".";
     }
 
     public boolean isTeaching(Student student) {
         if (this.classes.stream().map(item -> item.getNumber()).collect(Collectors.toList()).contains(student.getKlass().getNumber()))
             return true;
-        else
-            return false;
+        return false;
     }
 
     public void assignedLeader(Student student, int classNumber) {
         System.out.print("I am " + this.getName() + ". I know " + student.getName() + " become Leader of Class " + classNumber + ".\n");
+    }
+
+    public void addedStudent(Student student, int classNumber) {
+        System.out.print("I am " + this.getName() + ". I know " + student.getName() + " has joined Class " + classNumber + ".\n");
     }
 }

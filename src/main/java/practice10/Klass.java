@@ -3,15 +3,13 @@ package practice10;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: change to private
 public class Klass {
     int number;
     List<Student> studentList;
     Student leader;
     Teacher classTeacher;
 
-    public Teacher getClassTeacher() {
-        return classTeacher;
-    }
 
     public void setClassTeacher(Teacher classTeacher) {
         this.classTeacher = classTeacher;
@@ -47,7 +45,7 @@ public class Klass {
         if (this.studentList.contains(student)) {
             this.leader = student;
             if (this.classTeacher != null)
-                System.out.print("I am " + this.classTeacher.getName() + ". I know " + student.getName() + " become Leader of Class " + this.number + ".\n");
+                this.classTeacher.assignedLeader(student, this.getNumber());
         } else
             System.out.print("It is not one of us.\n");
     }
@@ -55,7 +53,7 @@ public class Klass {
     public void appendMember(Student student) {
         if (!studentList.contains(student)) {
             if (classTeacher != null)
-                System.out.print("I am " + classTeacher.getName() + ". I know " + student.getName() + " has joined Class " + this.number + ".\n");
+                this.classTeacher.addedStudent(student, this.getNumber());
             this.studentList.add(student);
         }
 
