@@ -14,7 +14,7 @@ public class Teacher extends Person {
 
     public Teacher(int id, String name, int age, List<Klass> classes) {
         super(id, name, age);
-        for (Klass klass: classes) {
+        for (Klass klass : classes) {
             klass.setClassTeacher(this);
         }
         this.setClasses(classes);
@@ -25,7 +25,7 @@ public class Teacher extends Person {
     }
 
     public void setClasses(List<Klass> classes) {
-        for(Klass klass : classes) {
+        for (Klass klass : classes) {
             klass.setClassTeacher(this);
         }
         this.classes = classes;
@@ -36,26 +36,29 @@ public class Teacher extends Person {
             return super.introduce() + " I am a Teacher. I teach No Class.";
         } else {
             StringBuilder str = new StringBuilder();
-            for (Klass klass : classes) {
-                if (classes.indexOf(klass) < classes.size() - 1)
-                    str.append(klass.getNumber()).append(", ");
-                else
-                    str.append(klass.getNumber());
-            }
-            return super.introduce() + " I am a Teacher. I teach Class " + str + ".";
+            classes.stream().forEach(
+                    item -> {
+                        if (classes.indexOf(item) < classes.size() - 1)
+                            str.append(item.getNumber()).append(", ");
+                        else
+                            str.append(item.getNumber());
+                    }
+            );
+
+            return super.introduce() + String.format(" I am a Teacher. I teach Class %s.", str);
         }
     }
 
     public String introduceWith(Student student) {
         boolean isInClass = false;
-        if (this.classes.stream().map(item -> item.getNumber()).collect(Collectors.toList()).contains(student.getKlass().getNumber()))
+        if (this.classes.stream().map(item -> item.getNumber()).collect(Collectors.toList()).contains(student.getKlass().getNumber())) {
             isInClass = true;
-        else
+        } else {
             isInClass = false;
-
+        }
         if (isInClass)
-            return super.introduce() + " I am a Teacher. I teach " + student.getName() + ".";
-        return super.introduce() + " I am a Teacher. I don't teach " + student.getName() + ".";
+            return super.introduce() + String.format(" I am a Teacher. I teach %s.", student.getName());
+        return super.introduce() + String.format(" I am a Teacher. I don't teach %s.", student.getName());
     }
 
     public boolean isTeaching(Student student) {
@@ -65,10 +68,10 @@ public class Teacher extends Person {
     }
 
     public void assignedLeader(Student student, int classNumber) {
-        System.out.print("I am " + this.getName() + ". I know " + student.getName() + " become Leader of Class " + classNumber + ".\n");
+        System.out.print(String.format("I am %s. I know %s become Leader of Class %d.\n", this.getName(), student.getName(), classNumber));
     }
 
     public void addedStudent(Student student, int classNumber) {
-        System.out.print("I am " + this.getName() + ". I know " + student.getName() + " has joined Class " + classNumber + ".\n");
+        System.out.print(String.format("I am %s. I know %s has joined Class %d.\n", this.getName(), student.getName(), classNumber));
     }
 }
